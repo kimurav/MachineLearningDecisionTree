@@ -3,6 +3,7 @@ import java.io.*;
 
 class Scheme {
   List<Attribute> attrList;
+  Attribute function;
   Scheme() {
     this.attrList = new ArrayList();
   }
@@ -34,5 +35,31 @@ class Scheme {
   Attribute getFunctionAttribute(){
     return this.attrList.get(attrList.size() - 1);
   }
-
+  void setFunction(){
+    this.function = attrList.get(attrList.size() -1);
+  }
+  int getIndexOfAttribute(String toCheck){
+    int j = 0;
+    for(Attribute i : this.attrList){
+      if(i.name.equals(toCheck)){
+        return j;
+      }
+      j++;
+    }
+    System.out.println("Could not find attribute");
+    return -1;
+  }
+  void removeAttribute(Attribute toRemove){
+    int remIndex = -1;
+    int countIndex = 0;
+    for(Attribute a : this.attrList){
+      if(a.name.equals(toRemove.name)){
+        remIndex = countIndex;
+      }
+      countIndex++;
+    }
+    if(remIndex >  -1){
+      this.attrList.remove(remIndex);
+    }
+  }
 }

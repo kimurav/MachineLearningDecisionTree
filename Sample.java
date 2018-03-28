@@ -19,7 +19,6 @@ class Sample {
           toAddExample.attributeValues[attrIndex] = scheme.attrList.get(attrIndex).getIndexOfValues(s);
           attrIndex++;
         }
-
         this.examples.add(toAddExample);
       }
     }catch(FileNotFoundException e){
@@ -48,7 +47,7 @@ class Sample {
     return I;
   }
   double getRemainder(Attribute b, List<Example> ex, int k){
-    System.out.println("Attribute: " + b.name);
+    //System.out.println("Attribute: " + b.name);
     int size = ex.size();
     int m = b.values.size();
 
@@ -93,14 +92,42 @@ class Sample {
     Attribute bestA = null;
     for(Attribute b : attributeList){
       double remainder = getRemainder(b, sam.examples, k);
-      System.out.println(remainder);
       double gain = info - remainder;
+      System.out.println("Test " + b.name + ": gain = " + gain);
       if(gain > maxGain){
         maxGain = gain;
         bestA = b;
       }
     }
+    System.out.println("\tSelected attribute: "+bestA.name);
+    System.out.println();
     return bestA;
+  }
+  /*Returns the the index of the value that getsf the majority classification*/
+  int getMajorityClass(Scheme sc){
+    int[] arr = new int[sc.getFunctionAttribute().values.size()];
+    for(Example ex : this.examples) {
+      arr[ex.getFunctionValue()]++;
+    }
+    int highest = arr[0];
+    int highestIndex = 0;
+    for(int i = 0; i< arr.length; i++){
+      if(arr[i] > highest){
+        highest = arr[i];
+        highestIndex = i;
+      }
+    }
+    return highestIndex;
+  }
+
+  boolean checkIfAllSameClass(){
+    int initialValue = this.examples.get(0).getFunctionValue();
+    for(Example e : this.examples){
+      if(e.getFunctionValue() != initialValue){
+        return false;
+      }
+    }
+    return true;
   }
 
 }

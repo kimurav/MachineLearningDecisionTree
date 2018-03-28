@@ -22,4 +22,14 @@ class Util {
       System.out.println();
     }
   }
+
+  static List<Attribute> removeAttribute(Attribute toRemove, List<Attribute> lst) {
+    List<Attribute> newList = new ArrayList();
+    for(Attribute a : lst) {
+      if(a.name.equals(toRemove.name) == false){
+        newList.add(a);
+      }
+    }
+    return newList;
+  }
 }
