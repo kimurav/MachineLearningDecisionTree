@@ -32,4 +32,8 @@ class Util {
     }
     return newList;
   }
+  static <T> void printTree(Node<T> node, String appender) {
+		  System.out.println(appender + node.getData());
+		  node.getChildren().forEach(each ->  printTree(each, appender + appender));
+	 }
 }

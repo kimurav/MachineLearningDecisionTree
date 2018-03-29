@@ -4,6 +4,7 @@ import java.io.*;
 
 class DTLearn {
   Scheme scheme;
+
   DTLearn(Scheme s){
     this.scheme = s;
   }
@@ -23,7 +24,7 @@ class DTLearn {
     }
     Attribute currentAttribute = s.getAttribute(atList, s);
     //System.out.println("Current attribute is: "+ currentAttribute.name);
-    Node tr = new Node(currentAttribute);
+    Node<String> tr = new Node(currentAttribute.name);
     int m = s.getMajorityClass(scheme);
 
     for(String value:currentAttribute.values){
@@ -34,8 +35,10 @@ class DTLearn {
         }
       }
       atList = Util.removeAttribute(currentAttribute, atList);
-      Node subTree = learnDecisionTree(subg, atList, m);
-      subTree.parent = tr;
+      Node<String> subTree = learnDecisionTree(subg, atList, m);
+
+      subTree.setData(value + ": " +subTree.getData());
+      tr.addChild(subTree);
     }
     return tr;
   }
@@ -47,12 +50,14 @@ class DTLearn {
     sample.loadExamples(args[1], sc);
     DTLearn dtlearn = new DTLearn(sc);
     Util util = new Util();
-    Node root;
+    Node<String> root;
     //util.printAttrList(scheme);
     //util.printSample(sample);
     sc.setFunction();
     sc.attrList.remove(sc.attrList.size() - 1);
     root = dtlearn.learnDecisionTree(sample, sc.attrList, sample.getMajorityClass(sc));
+    util.printTree(root, "-");
+
   }
 
 }
