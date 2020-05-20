@@ -4,8 +4,7 @@ Implementing machine learning techniques such as decision tree building and clas
 
 # How To Build
 `make`
-
-## to run the loan qualification program
+## To run the loan qualification program
 `make loan`
 
 
